@@ -98,10 +98,11 @@ function setIconState(state) {
 setIconState('idle');
 
 // ---- 工具栏图标点击 → 通知 content script ----
-// content script 仅在页面加载时(document_idle)自动注入;对于扩展重载前已打开、
-// bfcache 恢复等未注入 content script 的 tab,sendMessage 会抛
-// "Receiving end does not exist"。此时用 chrome.scripting 程序化注入后再发一次,
-// 避免"有时候点图标没反应"。chrome:// 等内置页面仍无法注入,忽略。
+// activeTab 模式:不在 manifest 声明 content_scripts / host_permissions,
+// 用户点击图标获得当前 tab 的临时授权后,才程序化注入 content script。
+// 首次点击(或页面刷新后)sendMessage 会抛 "Receiving end does not exist",
+// 此时注入再重发;后续点击监听器已存在,直接送达。
+// chrome:// 等内置页面无法注入,忽略。
 async function ensureContentScript(tabId) {
   try {
     await chrome.scripting.executeScript({ target: { tabId }, files: ['content.js'] });

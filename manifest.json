@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "MarkPrompt",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "在页面上对元素进行编号注释,生成带标记的可视区截图与可直接粘贴给 AI 的 Prompt。点击工具栏图标开始。",
   "permissions": [
     "activeTab",
@@ -10,20 +10,9 @@
     "storage",
     "unlimitedStorage"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle"
-    }
-  ],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
